@@ -1,9 +1,30 @@
 from tkinter import *
 from tkinter import messagebox
+import random
 import re
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
+def generate_password():
+    letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+    numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+    symbols = ['!', '@', '#', '$', '&', '?']
 
+    letter_range = random.randint(6, 8)
+    number_range = random.randint(1, 3)
+    symbol_range = random.randint(1, 3)
+
+    password_letters = [random.choice(letters) for x in range(letter_range)]
+    password_numbers = [random.choice(numbers) for x in range(number_range)]
+    password_symbols = [random.choice(symbols) for x in range(symbol_range)]
+    password_list = password_letters + password_numbers + password_symbols
+    random.shuffle(password_list)
+
+    password = ''
+    for char in password_list:
+        password += char
+
+    password_input.delete(0, END)
+    password_input.insert(0, string=password)
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
 
@@ -71,7 +92,7 @@ password_input = Entry(width=21)
 password_input.focus()
 password_input.grid(column=1, row=3)
 
-generate_btn = Button(text='Generate Password')
+generate_btn = Button(text='Generate Password', command=generate_password)
 generate_btn.grid(column=2, row=3)
 
 add_btn = Button(text='Add', width=36, command=save_password)

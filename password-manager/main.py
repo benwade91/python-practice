@@ -2,6 +2,8 @@ from tkinter import *
 from tkinter import messagebox
 import random
 import re
+import pyperclip
+
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 def generate_password():
@@ -9,22 +11,17 @@ def generate_password():
     numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
     symbols = ['!', '@', '#', '$', '&', '?']
 
-    letter_range = random.randint(6, 8)
-    number_range = random.randint(1, 3)
-    symbol_range = random.randint(1, 3)
-
-    password_letters = [random.choice(letters) for x in range(letter_range)]
-    password_numbers = [random.choice(numbers) for x in range(number_range)]
-    password_symbols = [random.choice(symbols) for x in range(symbol_range)]
+    password_letters = [random.choice(letters) for x in range(random.randint(6, 8))]
+    password_numbers = [random.choice(numbers) for x in range(random.randint(1, 3))]
+    password_symbols = [random.choice(symbols) for x in range(random.randint(1, 3))]
     password_list = password_letters + password_numbers + password_symbols
     random.shuffle(password_list)
 
-    password = ''
-    for char in password_list:
-        password += char
+    password = ''.join(password_list)
 
     password_input.delete(0, END)
     password_input.insert(0, string=password)
+    pyperclip.copy(password)
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
 

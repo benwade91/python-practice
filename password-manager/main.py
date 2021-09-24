@@ -1,3 +1,4 @@
+import json
 from tkinter import *
 from tkinter import messagebox
 import random
@@ -42,9 +43,15 @@ def save_password():
     else:
         confirm_info = messagebox.askokcancel(title=website, message=f"email: {email} \n "
                                                                      f"password: {password} \n is this correct?")
+        json_data = {
+            website: {
+                "email": email,
+                "password": password
+            }
+        }
         if confirm_info:
-            pw_file = open('passwords.txt', 'a')
-            pw_file.write(f"{website} | {email} | {password} \n")
+            pw_file = open('passwords.json', 'w')
+            json.dump(json_data, pw_file, indent=4)
             pw_file.close()
             website_input.delete(0, END)
             email_input.delete(0, END)
@@ -57,6 +64,11 @@ def validate_email(email):
         return True
     else:
         return False
+
+# ----------------------------LOAD CREDENTIALS ------------------------ #
+def load_info():
+    website = website_input.get()
+    print(website)
 # ---------------------------- UI SETUP ------------------------------- #
 
 window = Tk()
@@ -71,9 +83,9 @@ canvas.grid(column=1, row=0)
 website_label = Label(text='Website:')
 website_label.grid(column=0, row=1)
 
-website_input = Entry(width=35)
+website_input = Entry(width=21)
 website_input.focus()
-website_input.grid(column=1, columnspan=2, row=1)
+website_input.grid(column=1, row=1)
 
 email_label = Label(text='Email/Username:')
 email_label.grid(column=0, row=2)
@@ -88,6 +100,9 @@ password_label.grid(column=0, row=3)
 password_input = Entry(width=21)
 password_input.focus()
 password_input.grid(column=1, row=3)
+
+load_btn = Button(text='Load Credentials', command=load_info)
+load_btn.grid(column=2, row=1)
 
 generate_btn = Button(text='Generate Password', command=generate_password)
 generate_btn.grid(column=2, row=3)

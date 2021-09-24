@@ -50,12 +50,11 @@ def save_password():
             }
         }
         if confirm_info:
-            pw_file = open('passwords.json', 'w')
-            json.dump(json_data, pw_file, indent=4)
-            pw_file.close()
-            website_input.delete(0, END)
-            email_input.delete(0, END)
-            password_input.delete(0, END)
+            with open('passwords.json', 'w') as pw_file:
+                json.dump(json_data, pw_file, indent=4)
+                website_input.delete(0, END)
+                email_input.delete(0, END)
+                password_input.delete(0, END)
 
 
 def validate_email(email):

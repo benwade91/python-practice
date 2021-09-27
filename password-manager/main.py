@@ -27,7 +27,7 @@ def generate_password():
 
 
 def save_password():
-    website = website_input.get()
+    website = (website_input.get()).lower()
     email = email_input.get()
     password = password_input.get()
 
@@ -74,9 +74,21 @@ def validate_email(email):
         return False
 
 # ----------------------------LOAD CREDENTIALS ------------------------ #
+
+
 def load_info():
-    website = website_input.get()
-    print(website)
+    website = (website_input.get()).lower()
+    try:
+        with open('passwords.json', 'r') as pw_file:
+            data = json.load(pw_file)
+            try:
+                print(data[website]['email'])
+                messagebox.showinfo(title=f"{website.title()} Credentials", message=f"email: {data[website]['email']}\n password: {data[website]['password']}")
+            except KeyError:
+                messagebox.showerror(title='No Data Available', message="It looks like that website isn't saved yet!")
+    except FileNotFoundError:
+        messagebox.showerror(title='File Not Found', message='There is no data password data stored.')
+
 # ---------------------------- UI SETUP ------------------------------- #
 
 window = Tk()

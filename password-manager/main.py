@@ -50,12 +50,21 @@ def save_password():
             }
         }
         if confirm_info:
-            with open('passwords.json', 'w') as pw_file:
-                json.dump(json_data, pw_file, indent=4)
+            try:
+                with open('passwords.json', 'r') as pw_file:
+                    data = json.load(pw_file)
+                    data.update(json_data)
+                with open('passwords.json', 'w') as pw_file:
+                    json.dump(data, pw_file, indent=4)
+
+            except FileNotFoundError:
+                with open('passwords.json', 'w') as pw_file:
+                    json.dump(json_data, pw_file, indent=4)
+
+            finally:
                 website_input.delete(0, END)
                 email_input.delete(0, END)
                 password_input.delete(0, END)
-
 
 def validate_email(email):
     regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'

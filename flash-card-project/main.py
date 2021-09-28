@@ -1,6 +1,5 @@
 from tkinter import *
 from tkinter import messagebox
-import time
 import pandas
 from flash_card_model import FlashCard
 from game_brain_model import GameBrain
@@ -20,14 +19,14 @@ with open('data/french_words.csv') as french_csv:
 
 # ------------------START GAME----------------- #
 def start_game():
-    # time.sleep(5)
-    canvas.create_image(400, 265, image=eng_window)
-    canvas.create_text(400, 265, font="Times 20 italic bold", text='words')
     for (french, english) in french_dic.items():
         new_card = FlashCard(french, english)
         flash_cards.append(new_card)
-    print(flash_cards)
-    game = GameBrain(right_img, wrong_img)
+
+    game = GameBrain(right_img, wrong_img, flash_cards, canvas, eng_window, french_window)
+
+    if game.questions_left():
+        game.next_card()
 
 # ------------------WINDOW----------------- #
 window = Tk()

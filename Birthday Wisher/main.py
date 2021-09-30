@@ -2,7 +2,6 @@ import smtplib
 import datetime as dt
 import random
 import pandas
-import re
 from secret_file import email, password, to_email
 
 day = dt.datetime.now().day
@@ -15,7 +14,8 @@ for (index, row) in bd.iterrows():
         name = row['name']
 
         with open(f'letter_templates/letter_{random.randint(1,3)}.txt') as letter_data:
-            letter = re.sub("\\[NAME]", name, letter_data.read())
+            letter = letter_data.read().replace('[NAME]', name)
+            print(letter)
 
         with smtplib.SMTP('smtp.mail.yahoo.com', 587) as connection:
             connection.starttls()

@@ -34,9 +34,12 @@ class QuizInterface:
 
     def get_next_question(self):
         self.canvas.config(bg='white')
-        question = self.quiz.next_question()
-        print(question)
-        self.canvas.itemconfig(self.question_text, text=question)
+        if self.quiz.still_has_questions():
+            question = self.quiz.next_question()
+            print(question)
+            self.canvas.itemconfig(self.question_text, text=question)
+        else:
+            self.canvas.itemconfig(self.question_text, text=f"Your final score is {self.quiz.score}/10")
 
     def true_answer(self):
         answer = self.quiz.check_answer("True")
@@ -50,8 +53,8 @@ class QuizInterface:
         if answer:
             self.score_label.config(text=f"Score: {self.quiz.score}")
             self.canvas.config(bg='green')
-            self.window.after(1000, self.get_next_question)
         else:
             self.canvas.config(bg='red')
-            self.window.after(1000, self.get_next_question)
+
+        self.window.after(1000, self.get_next_question)
 

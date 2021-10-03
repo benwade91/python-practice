@@ -1,16 +1,16 @@
 import requests
 from twilio.rest import Client
-from secret_file import api_key
+from secret_file import api_key, acc_sid, twilio_auth, twilio_number, my_number
 
 OWM_endpoint = "https://api.openweathermap.org/data/2.5/onecall"
 params = {
     'lat': 37.7599,
     'lon': -122.4148,
-    'appid': api_key
+    'appid': api_key,
+    'exclude': 'current, minutely, daily'
 }
 
 data = requests.get(OWM_endpoint, params=params)
-
 today_hourly = data.json()['hourly'][:12]
 
 
@@ -21,9 +21,18 @@ def weather_report():
         if weather_id < 700:
             rain = True
     if rain:
-        print("its gonna rain")
+        weather_info = "It's gonna rain today. ☔️"
     else:
-        print("no rain today")
+        weather_info = "No rain today!"
+
+    client = Client(acc_sid, twilio_auth)
+    message = client.messages \
+        .create(
+            body=weather_info,
+            from_=twilio_number,
+            to=my_number
+        )
+    print(message.status)
 
 
 weather_report()

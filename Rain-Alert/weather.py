@@ -1,6 +1,8 @@
+import os
 import requests
 from twilio.rest import Client
 from secret_file import api_key, acc_sid, twilio_auth, twilio_number, my_number
+from twilio.http.http_client import TwilioHttpClient
 
 OWM_endpoint = "https://api.openweathermap.org/data/2.5/onecall"
 params = {
@@ -25,7 +27,8 @@ def weather_report():
     else:
         weather_info = "No rain today!"
 
-    client = Client(acc_sid, twilio_auth)
+    proxy_client = TwilioHttpClient(proxy={'http': os.environ['http_proxy'], 'https': os.environ['https_proxy']})
+    client = Client(acc_sid, twilio_auth, http_client=proxy_client)
     message = client.messages \
         .create(
             body=weather_info,

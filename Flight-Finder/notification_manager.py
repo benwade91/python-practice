@@ -1,3 +1,7 @@
 class NotificationManager:
-    #This class is responsible for sending notifications with the deal flight details.
-    pass
+    def __init__(self, flights):
+        self.flights = flights
+
+    def print_information(self):
+        for flight in self.flights:
+            print(f"Theres's a flight to {flight[0]} on {flight[1]} for ${flight[2]}")

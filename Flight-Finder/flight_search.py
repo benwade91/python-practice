@@ -4,7 +4,6 @@ import requests
 import datetime
 from data_manager import DataManager
 
-
 class FlightSearch:
     def __init__(self, kiwi, sheety):
         self.flights = []
@@ -28,6 +27,9 @@ class FlightSearch:
                 'curr': 'USD'
             }
             response = requests.get(url=self.kiwi_endpoint, headers=self.kiwi_header, params=kiwi_params).json()['data']
+            print(response)
+            print(response[0]['route'][0]['airline'])
+            print(response[0]['route'][0]['flight_no'])
             flight_date = response[0]['route'][0]['utc_departure'].split('T')[0]
             flight_to = response[0]['cityTo']
             flight_price = response[0]['price']

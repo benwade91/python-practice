@@ -1,5 +1,4 @@
 
-import os
 import requests
 import datetime
 from data_manager import DataManager
@@ -27,11 +26,11 @@ class FlightSearch:
                 'curr': 'USD'
             }
             response = requests.get(url=self.kiwi_endpoint, headers=self.kiwi_header, params=kiwi_params).json()['data']
-            print(response)
-            print(response[0]['route'][0]['airline'])
-            print(response[0]['route'][0]['flight_no'])
+            # print(response)
+            airline = response[0]['route'][0]['airline']
+            flight_no = response[0]['route'][0]['flight_no']
             flight_date = response[0]['route'][0]['utc_departure'].split('T')[0]
             flight_to = response[0]['cityTo']
             flight_price = response[0]['price']
             if search[2] > flight_price:
-                self.flights.append((flight_to, flight_date, flight_price))
+                self.flights.append((flight_to, flight_date, flight_price, airline, flight_no))

@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from pprint import pprint
 
 chrome_driver_path = '/Users/benjaminwade/Desktop/python-practice/chromedriver'
 s = Service(chrome_driver_path)
@@ -20,5 +21,5 @@ for index, item in enumerate(line_items):
             'time': time.text,
             'name': location.text
         }
-print(event_dic)
+pprint(event_dic)
 driver.quit()

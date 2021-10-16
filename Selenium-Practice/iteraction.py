@@ -5,8 +5,6 @@ from selenium.webdriver.common.keys import Keys
 from pprint import pprint
 import time
 
-time_end = time.time() + .5
-
 chrome_driver_path = '/Users/benjaminwade/Desktop/python-practice/chromedriver'
 s = Service(chrome_driver_path)
 driver = webdriver.Chrome(service=s)
@@ -14,21 +12,25 @@ driver = webdriver.Chrome(service=s)
 driver.get('http://orteil.dashnet.org/experiments/cookie/')
 
 cookie = driver.find_element(By.ID, 'cookie')
-store = driver.find_element(By.CSS_SELECTOR, '#store')
-store_items = store.find_elements(By.TAG_NAME, 'div b')
-store_items.reverse()
-# store_items = [item.get_dom_attribute('id') != 'buyElder Pledge' for (item) in store.find_elements(By.TAG_NAME, 'div')]
 
-for item in store_items:
-    try:
-        print(int(''.join(item.text.split()[-1].split(','))))
-    except:
-        pass
-
-
+time_end = time.time() + 15
 while time.time() < time_end:
-    cookie.click()
     money = int(driver.find_element(By.ID, 'money').text)
-    print(money)
+    store = driver.find_element(By.CSS_SELECTOR, '#store')
+    store_items = store.find_elements(By.TAG_NAME, 'div b')
+    store_items.reverse()
+    for item in store_items:
+        if item.is_displayed():
+            price = int(item.text.replace(',', '').split(' - ')[-1])
+            if money > price:
+                item.click()
+                break
+    cookie_time = time.time() + 5
+    while time.time() < cookie_time:
+        cookie.click()
+
+
+print(int(driver.find_element(By.ID, 'money').text))
+
 
 driver.quit()

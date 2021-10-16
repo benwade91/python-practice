@@ -26,7 +26,7 @@ while time.time() < time_end:
             if money > price:
                 item.click()
                 break
-    cookie_time = time.time() + 4.5
+    cookie_time = time.time() + 5
     while time.time() < cookie_time:
         cookie.click()
 

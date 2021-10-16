@@ -10,13 +10,13 @@ s = Service(chrome_driver_path)
 driver = webdriver.Chrome(service=s)
 
 driver.get('http://orteil.dashnet.org/experiments/cookie/')
-driver.maximize_window()
+driver.fullscreen_window()
 
 cookie = driver.find_element(By.ID, 'cookie')
 
 time_end = time.time() + 60 * 5
 while time.time() < time_end:
-    money = int(driver.find_element(By.ID, 'money').text)
+    money = int(driver.find_element(By.ID, 'money').text.replace(',', ''))
     store = driver.find_element(By.CSS_SELECTOR, '#store')
     store_items = store.find_elements(By.TAG_NAME, 'div b')
     store_items.reverse()
@@ -26,7 +26,7 @@ while time.time() < time_end:
             if money > price:
                 item.click()
                 break
-    cookie_time = time.time() + 5
+    cookie_time = time.time() + 4.5
     while time.time() < cookie_time:
         cookie.click()
 

@@ -10,10 +10,11 @@ s = Service(chrome_driver_path)
 driver = webdriver.Chrome(service=s)
 
 driver.get('http://orteil.dashnet.org/experiments/cookie/')
+driver.maximize_window()
 
 cookie = driver.find_element(By.ID, 'cookie')
 
-time_end = time.time() + 15
+time_end = time.time() + 60 * 5
 while time.time() < time_end:
     money = int(driver.find_element(By.ID, 'money').text)
     store = driver.find_element(By.CSS_SELECTOR, '#store')
@@ -30,7 +31,9 @@ while time.time() < time_end:
         cookie.click()
 
 
-print(int(driver.find_element(By.ID, 'money').text))
+cps = driver.find_element(By.ID, 'cps')
+print(cps.text)
+
 
 
 driver.quit()

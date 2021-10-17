@@ -42,6 +42,7 @@ search = driver.find_element(By.CLASS_NAME, 'jobs-search-box__submit-button')
 search.click()
 
 # FILTER AVAILABLE JOBS
+time.sleep(.5)
 easy_app = driver.find_element(By.XPATH, '//button[(text()="Easy Apply")]')
 easy_app.click()
 time.sleep(.5)
@@ -60,7 +61,8 @@ time.sleep(.5)
 
 # ACCESS LIST OF AVAILABLE JOBS
 job_list = driver.find_elements(By.XPATH, '//li[(text()="Apply easily")]')
-job_list = [job.find_element(By.XPATH, './../../..') for job in job_list]
+# job_list_filtered = [job.find_element(By.XPATH, './../../..') for job in job_list]
+
 
 # HOPEFULLY AUTOMATES FORMS ...?
 def fill_form():
@@ -136,11 +138,15 @@ for job in job_list:
 
     try:
         job.click()
-
-    except StaleElementReferenceException:
-        driver.find_elements(By.XPATH, '//li[(text()="Apply easily")][4]/../..').click()
     except ElementClickInterceptedException:
-        driver.find_elements(By.XPATH, '//li[(text()="Apply easily")][3]/../..').click()
+        print('jobclick1')
+        job = WebDriverWait(driver=driver, timeout=2, ignored_exceptions=NoSuchElementException) \
+            .until(expected_conditions.presence_of_element_located((By.XPATH, '//li[(text()="Apply easily")][3]/../..')))
+        job.click()
+    except StaleElementReferenceException:
+        print('it gets here')
+        job_list = driver.find_elements(By.XPATH, '//li[(text()="Apply easily")]')
+        job_list[job_list.index(job)].click()
 
     try:
         time.sleep(.5)
@@ -159,4 +165,4 @@ for job in job_list:
         continue
 
 
-driver.quit()
+

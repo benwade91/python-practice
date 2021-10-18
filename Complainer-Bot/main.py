@@ -13,12 +13,9 @@ driver.maximize_window()
 # --------START WEB SPEED ASSESSMENT
 driver.find_element(By.CLASS_NAME, 'start-text').click()
 
-time.sleep(30)
+time.sleep(60)
 
-dwnld_speed = driver.find_element(By.CLASS_NAME, 'download-speed')
-upld_speed = driver.find_element(By.CLASS_NAME, 'upload-speed')
+dwnld_speed = driver.find_element(By.XPATH, '//*[@id="container"]/div/div[3]/div/div/div/div[2]/div[3]/div[3]/div/div[3]/div/div/div[2]/div[1]/div[2]/div/div[2]/span')
+upld_speed = driver.find_element(By.XPATH, '//*[@id="container"]/div/div[3]/div/div/div/div[2]/div[3]/div[3]/div/div[3]/div/div/div[2]/div[1]/div[3]/div/div[2]/span')
 print(dwnld_speed.text)
 print(upld_speed.text)
-
-
-driver.quit()

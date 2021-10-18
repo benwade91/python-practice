@@ -28,4 +28,6 @@ print(upld_speed.text)
 twitter_bot = TwitterBot(os.environ.get("TWITTER_EMAIL"), os.environ.get("TWITTER_PW"), driver)
 twitter_bot.login()
 time.sleep(3)
-twitter_bot.tweet(message='hey guys')
+
+# ------THIS IS WHERE I'D TWEET @ COMCAST FOR MY SLOW INTERNET
+twitter_bot.tweet(message='hey guys, whats the deal?')

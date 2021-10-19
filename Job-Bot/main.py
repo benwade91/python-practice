@@ -25,6 +25,8 @@ pw_input = driver.find_element(By.ID, 'session_password')
 pw_input.send_keys(os.environ.get('LINKED_PW'))
 pw_input.send_keys(Keys.ENTER)
 
+time.sleep(30)
+
 # CLOSE MESSAGE WINDOW
 close_msg = driver.find_element(By.XPATH, '/html/body/div[5]/aside/div[1]/header/section[2]/button[2]')
 close_msg.click()

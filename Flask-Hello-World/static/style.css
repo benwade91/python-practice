@@ -1,0 +1,43 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5rem 5rem;
+    background: white;
+}
+
+ul {
+    display: flex;
+    list-style: none;
+    align-items: center;
+}
+a {
+    text-decoration: none;
+    font-size: 1.2rem;
+    color: black;
+    margin-left: 5rem;
+}
+.logo {
+    position: absolute;
+    text-align: center;
+    left: 50%;
+    top: 50%;
+    font-size: 1.5rem;
+    transform: translate(-50%, -50%) scale(4);
+}
+.home {
+    height: 100vh;
+}
+.about {
+    height: 100vh;
+    background-color: yellowgreen;
+}

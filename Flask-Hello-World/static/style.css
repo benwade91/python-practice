@@ -1,18 +1,28 @@
-*{
+:root {
+    --blue: #083C5A;
+    --green: #4CB648;
+    --yellow: #FCC72C;
+    --offwhite: #E4F4FD
+}
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    scroll-behavior: smooth;
 }
 
 body {
     font-family: 'Roboto', sans-serif;
+    color: var(--blue);
+    background-color: var(--offwhite);
 }
 
 nav {
     display: flex;
     justify-content: space-between;
     padding: 1.5rem 5rem;
-    background: white;
+    background: var(--offwhite);
 }
 
 ul {
@@ -20,24 +30,78 @@ ul {
     list-style: none;
     align-items: center;
 }
+
 a {
     text-decoration: none;
-    font-size: 1.2rem;
-    color: black;
+    font-size: 25px;
+    color: #082032;
     margin-left: 5rem;
 }
+
+.honeybee {
+    position: absolute;
+    text-align: center;
+    left: 20%;
+    top: 65%;
+    height: 20%;
+}
+
 .logo {
     position: absolute;
     text-align: center;
+    color: var(--yellow);
+    text-shadow:1px 1px 1px black;
     left: 50%;
     top: 50%;
-    font-size: 1.5rem;
+    font-size: 25px;
     transform: translate(-50%, -50%) scale(4);
 }
-.home {
+
+.section {
     height: 100vh;
 }
-.about {
-    height: 100vh;
-    background-color: yellowgreen;
+
+#about {
+    padding-top: 15vh;
+    color: var(--yellow);
+    background-color: var(--blue);
+    text-align: center;
 }
+#about p {
+    padding: 3% 10%;
+}
+
+#contact {
+    padding-top: 15vh;
+    background-color: #F0A500;
+}
+
+.photo-scroll {
+    padding: 3%;
+    display: flex;
+    overflow: scroll;
+    height: 100vh;
+    scroll-snap-type: mandatory;
+    scroll-snap-points-x: repeat(100vh);
+    scroll-snap-type: x mandatory;
+  }
+  /* .photo-scroll > a {
+    scroll-snap-align: center;
+  } */
+  .photo-scroll a img {
+    scroll-snap-align: center;
+    display: inline-block;
+    width: 22rem;
+    border-radius: 10px;
+    border: 2px solid black;
+    font-size: 0;
+    margin-right: 20%;
+    position: relative;
+  }
+
+
+  @media only screen and (max-width: 700px) {
+      .photo-scroll a img {
+          width: 90vw;
+      }
+  }

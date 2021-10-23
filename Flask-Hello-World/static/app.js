@@ -2,7 +2,7 @@ let tl = gsap.timeline({
     scrollTrigger: {
         trigger: 'home',
         start: '0%',
-        end: '50%',
+        end: '80%',
         scrub: 1
     }
 })
@@ -11,7 +11,7 @@ let tl2 = gsap.timeline({
     scrollTrigger: {
         trigger: 'home',
         start: '0%',
-        end: '30%',
+        end: '20%',
         scrub: 1
     }
 })
@@ -27,5 +27,15 @@ let tl3 = gsap.timeline({
     }
 })
 
+let tl4 = gsap.timeline({
+    scrollTrigger: {
+        trigger: 'home',
+        start: '0%',
+        end: '20%',
+        scrub: 1
+    }
+})
+
 tl.fromTo(".sliding-text", {y:0}, {y:-400});
-tl2.fromTo(".logo", {scale: 4}, {scale: 1, top: '2rem', left: '4rem', x: '10%'})
+tl2.fromTo(".logo", {scale: 4}, {scale: 1, top: '2.5rem', left: '5rem', x: '10%'})
+tl4.fromTo(".honeybee", {left: '20%'}, {left: '100%', top: '10%', opacity: 0})

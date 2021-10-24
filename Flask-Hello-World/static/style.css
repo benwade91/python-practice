@@ -18,11 +18,23 @@ body {
     background-color: var(--offwhite);
 }
 
+#top_tag {
+    height: 0;
+}
+
 nav {
     display: flex;
     justify-content: space-between;
-    padding: 1.5rem 5rem;
+    padding: 1rem 3rem;
     background: var(--offwhite);
+    font-size: 25px;
+}
+nav a{
+    margin-left: 5rem;
+}
+
+.home {
+    z-index: 3;
 }
 
 ul {
@@ -33,9 +45,10 @@ ul {
 
 a {
     text-decoration: none;
-    font-size: 25px;
     color: #082032;
-    margin-left: 5rem;
+}
+a:hover {
+    color: var(--yellow);
 }
 
 .honeybee {
@@ -47,14 +60,15 @@ a {
 }
 
 .logo {
+    height: 50px;
     position: absolute;
     text-align: center;
     color: var(--yellow);
-    text-shadow:1px 1px 1px black;
+    text-shadow: 1px 1px 1px black;
     left: 50%;
     top: 50%;
     font-size: 25px;
-    transform: translate(-50%, -50%) scale(4);
+    transform: translate(-50%, -50%) scale(8, 8);
 }
 
 .section {
@@ -66,14 +80,44 @@ a {
     color: var(--yellow);
     background-color: var(--blue);
     text-align: center;
+    /* z-index: -1; */
+    display: flex;
+    align-items: center;
 }
+
 #about p {
     padding: 3% 10%;
 }
 
+.about-text {
+    width: 50%;
+}
+
+.carousel {
+    width: 50%;
+}
+
+.carousel img {
+    height: 50vh;
+    /* z-index: 0; */
+}
+
 #contact {
     padding-top: 15vh;
-    background-color: #F0A500;
+    height: 88vh;
+    background-image: url(../static/beehive.png);
+    background-size: cover;
+    font-size: 3rem;
+}
+
+.contact-text {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20%;
+}
+.contact-text a {
+    padding:20px 0;
+    z-index: 4;
 }
 
 .photo-scroll {
@@ -84,24 +128,11 @@ a {
     scroll-snap-type: mandatory;
     scroll-snap-points-x: repeat(100vh);
     scroll-snap-type: x mandatory;
-  }
-  /* .photo-scroll > a {
-    scroll-snap-align: center;
-  } */
-  .photo-scroll a img {
-    scroll-snap-align: center;
-    display: inline-block;
-    width: 22rem;
-    border-radius: 10px;
-    border: 2px solid black;
-    font-size: 0;
-    margin-right: 20%;
-    position: relative;
-  }
+}
 
 
-  @media only screen and (max-width: 700px) {
-      .photo-scroll a img {
-          width: 90vw;
-      }
-  }
+@media only screen and (max-width: 600px) {
+    #contact {
+        background-image: url(../static/honeycomb-bg.png);
+    }
+}

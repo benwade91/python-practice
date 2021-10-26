@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 import requests
-
+import smtplib
+import os
 
 app = Flask(__name__)
 
@@ -36,6 +37,14 @@ def email():
         print(email)
         print(phone)
         print(message)
+        with smtplib.SMTP('smtp.mail.yahoo.com', 587) as connection:
+            connection.starttls()
+            connection.login(user=os.environ.get('FROM_EMAIL'), password=os.environ.get('YAHOO_PW'))
+            connection.sendmail(
+                from_addr=os.environ.get('FROM_EMAIL'),
+                to_addrs=os.environ.get('TO_EMAIL'),
+                msg=f"Subject:{name} {email}\n\n "
+                    f"{message}")
         return contact(title='Success!')
 
 if __name__ == '__main__':

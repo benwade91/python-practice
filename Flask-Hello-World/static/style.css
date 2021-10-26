@@ -28,6 +28,7 @@ nav {
     padding: 1rem 3rem;
     background: var(--offwhite);
     font-size: 25px;
+    height: 12vh;
 }
 nav a{
     margin-left: 5rem;
@@ -41,6 +42,7 @@ ul {
     display: flex;
     list-style: none;
     align-items: center;
+    padding-top: 5px;
 }
 
 a {
@@ -55,8 +57,10 @@ a:hover {
     position: absolute;
     text-align: center;
     left: 20%;
-    top: 65%;
-    height: 20%;
+    top: 180vh;
+    height: 20vw;
+    max-height: 60px;
+    z-index: 9;
 }
 
 .logo {
@@ -68,7 +72,7 @@ a:hover {
     left: 50%;
     top: 50%;
     font-size: 25px;
-    transform: translate(-50%, -50%) scale(8, 8);
+    transform: translate(-50%, -50%) scale(8);
 }
 
 .section {
@@ -78,7 +82,7 @@ a:hover {
 #about {
     padding-top: 15vh;
     color: var(--yellow);
-    background-color: var(--blue);
+    background-image: linear-gradient(to right, var(--blue), var(--green));
     text-align: center;
     /* z-index: -1; */
     display: flex;
@@ -99,6 +103,8 @@ a:hover {
 
 .carousel img {
     height: 50vh;
+    border-radius: 10px;
+    border: 1px solid black;
     /* z-index: 0; */
 }
 
@@ -107,6 +113,7 @@ a:hover {
     height: 88vh;
     background-image: url(../static/beehive.png);
     background-size: cover;
+    background-position: center;
     font-size: 3rem;
 }
 
@@ -131,8 +138,61 @@ a:hover {
 }
 
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+        padding: 0;
+        background: var(--offwhite);
+        font-size: 15px;
+        height: 12vh;
+        align-items: center;
+    }
+
+    nav a{
+        margin-left: 0;
+        padding: 15px 10px;
+    }
+    .sliding-text {
+        font-size: 15px;
+        padding-left: 10px;
+    }
+    ul{
+        margin-top: 2vh;
+        padding-right: 10px;
+    }
+    .logo{
+        transform: translate(-50%, -50%) scale(6);
+    }
+
+    .honeybee{
+        display: none;
+    }
+
+    #about {
+        flex-direction: column;
+    }
+    .about-text{
+        height: 30%;
+        overflow: scroll;
+        width: 100%;
+    }
+    .carousel {
+        width: 90vw;
+        height: 90vw;
+    }
+    .carousel img{
+        height: 80vw;
+    }
     #contact {
         background-image: url(../static/honeycomb-bg.png);
+        
+    }
+    .contact-text {
+        margin-left: 0;
+        width: 100%;
+        align-items: center;
     }
 }
+/* @media only screen and (max-width: 600px) {} */

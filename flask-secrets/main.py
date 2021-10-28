@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Email
+from flask_bootstrap import Bootstrap
 
 
 class MyForm(FlaskForm):
@@ -11,6 +12,7 @@ class MyForm(FlaskForm):
 
 
 app = Flask(__name__)
+Bootstrap(app)
 app.secret_key = 'a random string'
 
 
@@ -25,7 +27,12 @@ def login():
     if form.validate_on_submit():
         print(form.email.data)
         print(form.password.data)
-        return render_template('success.html')
+        email = "admin@email.com"
+        password = '12345678'
+        if form.email.data == email and form.password.data == password:
+            return render_template('success.html')
+        else:
+            return render_template('denied.html')
     return render_template('login.html', form=form)
 
 if __name__ == '__main__':

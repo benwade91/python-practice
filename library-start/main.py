@@ -12,6 +12,17 @@ def home():
 
 @app.route("/add", methods=['GET', 'POST'])
 def add():
+    if request.method == 'POST':
+        title = request.form.get('book_name', None)
+        author = request.form.get('author', None)
+        rating = request.form.get('rating', None)
+        new_book = {
+            'title': title,
+            'author': author,
+            'rating': rating
+        }
+        all_books.append(new_book)
+        return redirect('/')
     return render_template('add.html')
 
 

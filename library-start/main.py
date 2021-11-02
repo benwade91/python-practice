@@ -59,6 +59,14 @@ def edit(edit_id):
         return redirect('/')
 
 
+@app.route('/delete/<book_id>')
+def delete(book_id):
+    book_to_delete = Book.query.get(book_id)
+    db.session.delete(book_to_delete)
+    db.session.commit()
+    return redirect('/')
+
+
 if __name__ == "__main__":
     app.run(debug=False)
 

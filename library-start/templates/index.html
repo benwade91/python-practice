@@ -11,7 +11,7 @@
             {% for book in library %}
             <li>
                 <button onclick="window.location.href='/edit/{{ book.id }}'">Edit</button>
-                <button>Delete</button>
+                <button onclick="window.location.href='/delete/{{ book.id }}'">Delete</button>
                 {{ book.title }}, {{ book.author }}, {{ book.rating }}</li>
             {% endfor %}
         {% else %}

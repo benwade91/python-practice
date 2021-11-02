@@ -9,7 +9,10 @@
     <ul>
         {% if library %}
             {% for book in library %}
-            <li>{{ book.title }}, {{ book.author }}, {{ book.rating }}</li>
+            <li>
+                <button onclick="window.location.href='/edit/{{ book.id }}'">Edit</button>
+                <button>Delete</button>
+                {{ book.title }}, {{ book.author }}, {{ book.rating }}</li>
             {% endfor %}
         {% else %}
             <li>Library is empty</li>

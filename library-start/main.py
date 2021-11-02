@@ -42,6 +42,23 @@ def add():
     return render_template('add.html')
 
 
+@app.route("/edit/<edit_id>", methods=['GET', 'POST'])
+def edit(edit_id):
+    book = Book.query.get(edit_id)
+    if request.method == 'GET':
+        print(book.title)
+        return render_template('edit.html', book=book)
+    else:
+        title = request.form.get('book_name', None)
+        author = request.form.get('author', None)
+        rating = float(request.form.get('rating', None))
+        book.title = title
+        book.author = author
+        book.rating = rating
+        db.session.commit()
+        return redirect('/')
+
+
 if __name__ == "__main__":
     app.run(debug=False)
 

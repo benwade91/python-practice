@@ -9,7 +9,7 @@
     <ul>
         {% if library %}
             {% for book in library %}
-            <li> {{ book }}</li>
+            <li>{{ book.title }}, {{ book.author }}, {{ book.rating }}</li>
             {% endfor %}
         {% else %}
             <li>Library is empty</li>

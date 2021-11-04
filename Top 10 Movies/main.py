@@ -54,9 +54,15 @@ def home():
     all_movies = db.session.query(Movie).all()
     return render_template("index.html", movies=all_movies)
 
-@app.route("/add", methods=['GET', 'POST'])
+# @app.route("/add", methods=['GET', 'POST'])
+
 
 @app.route("/delete/<movie_id>")
+def delete(movie_id):
+    movie_to_delete = Movie.query.get(movie_id)
+    db.session.delete(movie_to_delete)
+    db.session.commit()
+    return redirect('/')
 
 @app.route("/edit/<movie_id>", methods=['POST', 'GET'])
 def edit(movie_id):

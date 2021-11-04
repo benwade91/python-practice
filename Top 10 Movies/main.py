@@ -2,8 +2,8 @@ from flask import Flask, render_template, redirect, url_for, request
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired
+from wtforms import StringField, SubmitField, FloatField
+from wtforms.validators import DataRequired, NumberRange
 import requests
 
 app = Flask(__name__)
@@ -12,6 +12,12 @@ app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 Bootstrap(app)
 db = SQLAlchemy(app)
+
+
+class EditForm(FlaskForm):
+    rating = FloatField('Your rating out of 10', validators=[NumberRange(min=0, max=10, message="Chose a number between 0 and 10")])
+    review = StringField('Your review', validators=[DataRequired()])
+    submit = SubmitField('Submit')
 
 
 class Movie(db.Model):
@@ -48,7 +54,24 @@ def home():
     all_movies = db.session.query(Movie).all()
     return render_template("index.html", movies=all_movies)
 
+@app.route("/add", methods=['GET', 'POST'])
 
+@app.route("/delete/<movie_id>")
+
+@app.route("/edit/<movie_id>", methods=['POST', 'GET'])
+def edit(movie_id):
+    movie = Movie.query.get(movie_id)
+    form = EditForm()
+    if request.method == 'GET':
+        print(movie.title)
+        return render_template('edit.html', movie=movie, form=form)
+    elif form.validate_on_submit():
+        rating = form.rating.data
+        review = form.review.data
+        movie.rating = rating
+        movie.review = review
+        db.session.commit()
+        return redirect('/')
 
 if __name__ == '__main__':
     app.run(debug=True)

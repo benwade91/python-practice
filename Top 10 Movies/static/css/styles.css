@@ -71,6 +71,16 @@
 	 margin: 1rem auto;
 	 position: relative;
 }
+
+.card a {
+display: none;
+}
+
+.card:hover a {
+display:inline;
+margin-bottom: 5px;
+}
+
  @media screen and (max-width: 800px) {
 	 .card {
 		 width: calc(50% - 3rem);

@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, render_template, request
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import select
 import random
 import pprint
 
@@ -45,6 +46,16 @@ def random_cafe():
 def all_cafes():
     cafe_list = db.session.query(Cafe).all()
     return jsonify(cafes=[cafe.to_dict() for cafe in cafe_list])
+
+
+@app.route("/search")
+def city_search():
+    city = request.args.get('location')
+    cafe = Cafe.query.filter_by(location=city).first()
+    if cafe is None:
+        return '{"error": {"Not found": "Sorry, we don\'t have a cafe at that location"}}'
+    else:
+        return jsonify(cafe=cafe.to_dict())
 
 
 ## HTTP GET - Read Record

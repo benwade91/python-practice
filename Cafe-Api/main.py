@@ -87,9 +87,19 @@ def update_price(cafe_id):
         return jsonify(cafe=cafe.to_dict())
 
 
-
-## HTTP PUT/PATCH - Update Record
-
+@app.route("/delete/<cafe_id>", methods=["DELETE"])
+def delete_cafe(cafe_id):
+    cafe = Cafe.query.get(cafe_id)
+    user_api = request.args.get('api-key')
+    if user_api == 'secretAPIKey':
+        if cafe is None:
+            return '{"error": {"Not found": "Sorry, we don\'t have a cafe at that location"}}'
+        else:
+            db.session.delete(cafe)
+            db.session.commit()
+            return '{"Success": "Cafe Closed"}'
+    else:
+        return '{"error": {"Wrong Credentials": "Sorry, you need the correct API Key"}}'
 ## HTTP DELETE - Delete Record
 
 

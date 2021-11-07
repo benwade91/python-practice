@@ -1,8 +1,7 @@
 from flask import Flask, jsonify, render_template, request
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import select
 import random
-import pprint
+
 
 app = Flask(__name__)
 
@@ -77,9 +76,17 @@ def add_cafe():
     return jsonify(response={"success": "Successfully added the new cafe."})
 
 
-## HTTP GET - Read Record
+@app.route("/update-price/<cafe_id>", methods=["PATCH"])
+def update_price(cafe_id):
+    cafe = Cafe.query.get(cafe_id)
+    if cafe is None:
+        return '{"error": {"Not found": "Sorry, we don\'t have a cafe at that location"}}'
+    else:
+        cafe.coffee_price = request.form.get('new_price')
+        db.session.commit()
+        return jsonify(cafe=cafe.to_dict())
 
-## HTTP POST - Create Record
+
 
 ## HTTP PUT/PATCH - Update Record
 

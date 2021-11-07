@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 import random
+import pprint
 
 app = Flask(__name__)
 
@@ -24,21 +25,27 @@ class Cafe(db.Model):
     can_take_calls = db.Column(db.Boolean, nullable=False)
     coffee_price = db.Column(db.String(250), nullable=True)
 
+    def to_dict(self):
+        return {column.name: getattr(self, column.name) for column in self.__table__.columns}
+
 
 @app.route("/")
 def home():
     return render_template("index.html")
 
-@app.route("/random")
-def random_():
-    all_cafes = db.session.query(Cafe).all()
-    index = random.randint(0, len(all_cafes))
-    cafe = all_cafes[index]
-    return jsonify(id=cafe.id, name=cafe.name, map_url=cafe.map_url, img_url=cafe.img_url, location=cafe.location,
-                   seats=cafe.seats, has_toilet=cafe.has_toilet, has_wifi=cafe.has_wifi, has_sockets=cafe.has_sockets,
-                   can_take_calls=cafe.can_take_calls, coffee_price=cafe.coffee_price)
 
-    
+@app.route("/random")
+def random_cafe():
+    cafe_list = db.session.query(Cafe).all()
+    cafe = random.choice(cafe_list)
+    return jsonify(cafe=cafe.to_dict())
+
+
+@app.route("/all")
+def all_cafes():
+    cafe_list = db.session.query(Cafe).all()
+    return jsonify(cafes=[cafe.to_dict() for cafe in cafe_list])
+
 
 ## HTTP GET - Read Record
 

@@ -1,6 +1,6 @@
 import datetime
 
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, request
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
@@ -62,6 +62,35 @@ def new_post():
         db.session.commit()
         return redirect("/")
 
+
+@app.route("/edit-post/<int:post_id>", methods=['GET', 'POST'])
+def edit_post(post_id):
+    post = BlogPost.query.get(post_id)
+    form = CreatePostForm(date=post.date, title=post.title, subtitle=post.subtitle, author=post.author,
+                          img_url=post.img_url, body=post.body)
+    if request.method == 'GET':
+        return render_template('make-post.html', form=form)
+    else:
+        title = request.form.get('title')
+        subtitle = request.form.get('subtitle')
+        author = request.form.get('author')
+        img_url = request.form.get('img_url')
+        body = request.form.get('body')
+        post.title = title
+        post.subtitle = subtitle
+        post.author = author
+        post.img_url = img_url
+        post.body = body
+        db.session.commit()
+        return redirect(f"/post/{post.id}")
+
+
+@app.route("/delete/<int:post_id>")
+def delete_post(post_id):
+    post = BlogPost.query.get(post_id)
+    db.session.delete(post)
+    db.session.commit()
+    return redirect('/')
 
 @app.route("/post/<int:index>")
 def show_post(index):

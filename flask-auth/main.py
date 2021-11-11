@@ -37,7 +37,7 @@ def login():
 
 @app.route('/secrets')
 def secrets():
-    return render_template("secrets.html")
+    return render_template("secrets.html", name='Name')
 
 
 @app.route('/logout')

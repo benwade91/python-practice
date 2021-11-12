@@ -18,19 +18,20 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(100))
     name = db.Column(db.String(1000))
 
-db.create_all()
+# Only needed on initial server spin
+# db.create_all()
 
-
+# Maintains state of logged in user
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
 
-
+# Renders home page
 @app.route('/')
 def home():
     return render_template("index.html")
 
-
+# Renders registration page
 @app.route('/register', methods=['POST', 'GET'])
 def register():
     if request.method == 'POST':
@@ -54,7 +55,7 @@ def register():
     else:
         return render_template("register.html")
 
-
+# Renders login page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
@@ -74,19 +75,19 @@ def login():
                 error = 'Invalid credentials'
     return render_template("login.html", error=error)
 
-
+# Renders page protected by authentication process
 @app.route('/secrets')
 @login_required
 def secrets():
     return render_template("secrets.html", name=current_user.name)
 
-
+# Logs user out and returns user to home page
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect('/')
 
-
+# Initializes download, provided user is logged in
 @app.route('/download')
 @login_required
 def download():

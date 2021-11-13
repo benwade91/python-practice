@@ -6,7 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
-from forms import CreatePostForm
+from forms import CreatePostForm, CreateUserForm
 from flask_gravatar import Gravatar
 
 app = Flask(__name__)
@@ -42,7 +42,8 @@ def get_all_posts():
 
 @app.route('/register')
 def register():
-    return render_template("register.html")
+    form = CreateUserForm()
+    return render_template("register.html", form=form)
 
 
 @app.route('/login')
@@ -120,4 +121,4 @@ def delete_post(post_id):
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
+    app.run(debug=True, port=5001)

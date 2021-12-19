@@ -47,7 +47,10 @@ class Comment(db.model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text, nullable=False)
     comment_author = relationship("User", back_populates="comments")
-    comment_author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    post_id = db.Column(db.Integer, db.ForeignKey("blog_posts.id"))
+    parent_post = relationship("BlogPost", back_populates="comments")
+
 
 class BlogPost(db.Model):
     __tablename__ = "blog_posts"
@@ -59,6 +62,7 @@ class BlogPost(db.Model):
     img_url = db.Column(db.String(250), nullable=False)
     author = relationship("User", back_populates="posts")
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    comments = relationship("Comment", back_populate='parent_post')
 
 
 class User(UserMixin, db.Model):

@@ -42,7 +42,7 @@ db = SQLAlchemy(app)
 
 
 # CONFIGURE TABLES
-class Comment(db.model):
+class Comment(db.Model):
     __tablename__ = "comments"
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text, nullable=False)
@@ -62,7 +62,7 @@ class BlogPost(db.Model):
     img_url = db.Column(db.String(250), nullable=False)
     author = relationship("User", back_populates="posts")
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    comments = relationship("Comment", back_populate='parent_post')
+    comments = relationship("Comment", back_populates='parent_post')
 
 
 class User(UserMixin, db.Model):
@@ -72,7 +72,7 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(100))
     name = db.Column(db.String(100))
     posts = relationship("BlogPost", back_populates="author")
-    comments = relationship("Comment", back_populate='comment_author')
+    comments = relationship("Comment", back_populates='comment_author')
 
 
 db.create_all()
@@ -80,9 +80,7 @@ db.create_all()
 
 @app.route('/')
 def get_all_posts():
-    print(current_user)
     posts = BlogPost.query.all()
-    print(posts[0].author.name)
     return render_template("index.html", all_posts=posts, current_user=current_user)
 
 
@@ -143,11 +141,23 @@ def logout():
     return redirect(url_for('get_all_posts'))
 
 
-@app.route("/post/<int:post_id>")
+@app.route("/post/<int:post_id>", methods=['GET', 'POST'])
 def show_post(post_id):
     requested_post = BlogPost.query.get(post_id)
     form = CommentForm()
-    return render_template("post.html", post=requested_post, form=form)
+    print(requested_post.comments)
+    if form.validate_on_submit():
+        if not current_user.is_authenticated:
+            flash("You need to login or register to comment.")
+            return redirect(url_for("login"))
+        new_comment = Comment(
+            text=form.body.data,
+            comment_author=current_user,
+            parent_post=requested_post
+        )
+        db.session.add(new_comment)
+        db.session.commit()
+    return render_template("post.html", post=requested_post, form=form, comments=requested_post.comments)
 
 
 @app.route("/about")
